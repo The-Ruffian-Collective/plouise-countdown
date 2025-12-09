@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚌 Eilidh & Grace's Big Adventure to Manchester! 💄</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Chewy&family=Quicksand:wght@400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #ffd1dc 0%, #ffb3d9 25%, #ffc3a0 50%, #ffafbd 75%, #ffc3e1 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            transition: background 0.5s ease;
+        }
+        
+        body.glam-mode {
+            background: linear-gradient(135deg, #ff1493 0%, #ff69b4 25%, #ffd700 50%, #ff8c00 75%, #ff1493 100%);
+        }
+        
+        .mode-toggle {
+            position: fixed;
+            bottom: 180px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.9);
+            border: 3px solid #ffd700;
+            border-radius: 50px;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ff1493;
+            box-shadow: 0 8px 25px rgba(255, 20, 147, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .mode-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.5);
+        }
+        
+        body.glam-mode .mode-toggle {
+            background: rgba(0, 0, 0, 0.8);
+            color: #ffd700;
+            border-color: #ff1493;
+        }
+        
+        .road {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(to bottom, #7f8c8d 0%, #95a5a6 100%);
+            z-index: 1;
+            transition: background 0.5s ease;
+        }
+        
+        body.glam-mode .road {
+            background: linear-gradient(to bottom, #2c3e50 0%, #34495e 100%);
+        }
+        
+        .road-lines {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            animation: roadScroll 2s linear infinite;
+        }
+        
+        .road-line {
+            width: 80px;
+            height: 10px;
+            background: #f39c12;
+            border-radius: 5px;
+            transition: background 0.5s ease;
+        }
+        
+        body.glam-mode .road-line {
+            background: #ffd700;
+        }
+        
+        @keyframes roadScroll {
+            0% { transform: translateX(-100px); }
+            100% { transform: translateX(0); }
+        }
+        
+        .party-bus {
+            position: fixed;
+            bottom: 160px;
+            font-size: 5rem;
+            animation: busMove 4s ease-in-out infinite;
+            z-index: 2;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+        }
+        
+        @keyframes busMove {
+            0%, 100% { 
+                left: 10%;
+                transform: translateY(0) rotate(-2deg);
+            }
+            50% { 
+                left: 15%;
+                transform: translateY(-10px) rotate(2deg);
+            }
+        }
+        
+        .sparkles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+        }
+        
+        .sparkle {
+            position: absolute;
+            animation: sparkleFloat 4s ease-in-out infinite;
+            font-size: 1.5rem;
+        }
+        
+        @keyframes sparkleFloat {
+            0%, 100% { 
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.8;
+            }
+            50% { 
+                transform: translateY(-20px) rotate(180deg);
+                opacity: 1;
+            }
+        }
+        
+        .container {
+            position: relative;
+            z-index: 4;
+            text-align: center;
+            padding: 20px;
+            min-height: calc(100vh - 150px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .header {
+            margin-bottom: 20px;
+        }
+        
+        .title {
+            font-family: 'Fredoka One', cursive;
+            font-size: clamp(2rem, 7vw, 3.5rem);
+            background: linear-gradient(45deg, #ff6b9d, #ffd700, #ff8c94);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+            animation: titleBounce 2s ease-in-out infinite;
+            transition: all 0.5s ease;
+        }
+        
+        body.glam-mode .title {
+            background: linear-gradient(45deg, #ffd700, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+        }
+        
+        @keyframes titleBounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-15px); }
+            60% { transform: translateY(-7px); }
+        }
+        
+        .subtitle {
+            font-family: 'Chewy', cursive;
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            color: #ff1493;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
+            transition: all 0.5s ease;
+        }
+        
+        body.glam-mode .subtitle {
+            color: #ffd700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .destination-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,240,245,0.95) 100%);
+            border-radius: 30px;
+            padding: 30px;
+            margin: 20px auto;
+            max-width: 700px;
+            box-shadow: 0 20px 60px rgba(255,105,180,0.3);
+            border: 4px solid #ffd700;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+        
+        body.glam-mode .destination-card {
+            background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(139,0,139,0.8) 100%);
+            border-color: #ffd700;
+            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.5);
+        }
+        
+        .destination-card::before {
+            content: '✨';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 2rem;
+        }
+        
+        .destination-card::after {
+            content: '✨';
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 2rem;
+        }
+        
+        .destination-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            color: #ff1493;
+            margin-bottom: 15px;
+            transition: all 0.5s ease;
+        }
+        
+        body.glam-mode .destination-title {
+            color: #ffd700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+        }
+        
+        .destination-info {
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            color: #ff69b4;
+            font-weight: 600;
+            margin: 10px 0;
+            transition: all 0.5s ease;
+        }
+        
+        body.glam-mode .destination-info {
+            color: #ff69b4;
+        }
+        
+        .plouise-logo {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-weight: 700;
+            background: linear-gradient(45deg, #ff1493, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 15px 0;
+            transition: all 0.5s ease;
+        }
+        
+        body.glam-mode .plouise-logo {
+            background: linear-gradient(45deg, #ffd700, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+        }
+        
+        .countdown-container {
+            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,215,0,0.2));
+            border-radius: 25px;
+            padding: 35px 25px;
+            margin: 25px auto;
+            max-width: 800px;
+            box-shadow: 0 15px 45px rgba(255,20,147,0.25);
+            border: 3px solid #ffd700;
+            transition: all 0.5s ease;
+        }
+        
+        body.glam-mode .countdown-container {
+            background: linear-gradient(135deg, rgba(0,0,0,0.9), rgba(139,0,139,0.7));
+            box-shadow: 0 15px 45px rgba(255, 215, 0, 0.5);
+        }
+        
+        .countdown-text {
+            font-family: 'Chewy', cursive;
+            font-size: clamp(1.4rem, 4vw, 2rem);
+            color: #ff1493;
+            margin-bottom: 20px;
+            transition: all 0.5s ease;
+        }
+        
+        body.glam-mode .countdown-text {
+            color: #ffd700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+        }
+        
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .time-unit {
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+            padding: 20px 15px;
+            border-radius: 20px;
+            min-width: 90px;
+            box-shadow: 0 8px 25px rgba(255,20,147,0.4);
+            border: 3px solid #ffd700;
+            transition: all 0.3s ease;
+        }
+        
+        body.glam-mode .time-unit {
+            background: linear-gradient(135deg, #8b008b, #ff1493);
+            border-color: #ffd700;
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
+        }
+        
+        .time-unit:hover {
+            transform: scale(1.1) rotate(3deg);
+        }
+        
+        .number {
+            font-family: 'Fredoka One', cursive;
+            font-size: clamp(2rem, 6vw, 3rem);
+            display: block;
+            line-height: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .label {
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            font-weight: 600;
+            margin-top: 8px;
+            text-transform: uppercase;
+        }
+        
+        .adventure-details {
+            background: linear-gradient(135deg, rgba(255,192,203,0.9), rgba(255,215,0,0.3));
+            border-radius: 25px;
+            padding: 25px;
+            margin: 20px auto;
+            max-width: 700px;
+            border: 3px solid #ff69b4;
+            box-shadow: 0 10px 30px rgba(255,105,180,0.3);
+            transition: all 0.5s ease;
+        }
+        
+        body.glam-mode .adventure-details {
+            background: linear-gradient(135deg, rgba(139,0,139,0.8), rgba(255,20,147,0.6));
+            border-color: #ffd700;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.5);
+        }
+        
+        .detail-item {
+            font-size: clamp(1rem, 3.5vw, 1.3rem);
+            color: #c71585;
+            font-weight: 600;
+            margin: 12px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.5s ease;
+        }
+        
+        body.glam-mode .detail-item {
+            color: #ffd700;
+        }
+        
+        .emoji {
+            font-size: 1.8rem;
+        }
+        
+        .excitement-message {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #8b008b;
+            padding: 25px;
+            border-radius: 25px;
+            margin: 25px auto;
+            max-width: 700px;
+            font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+            font-weight: 700;
+            box-shadow: 0 10px 35px rgba(255,215,0,0.5);
+            border: 3px solid #ff1493;
+            animation: glow 2s ease-in-out infinite;
+            transition: all 0.5s ease;
+        }
+        
+        body.glam-mode .excitement-message {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            color: #000;
+            border-color: #ffd700;
+        }
+        
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 10px 35px rgba(255,215,0,0.5); }
+            50% { box-shadow: 0 10px 45px rgba(255,20,147,0.6); }
+        }
+        
+        .makeup-icons {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 2;
+        }
+        
+        .makeup-icon {
+            position: absolute;
+            font-size: 2.5rem;
+            animation: float 8s ease-in-out infinite;
+            opacity: 0.7;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(15deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .party-bus { font-size: 3.5rem; bottom: 170px; }
+            .countdown { gap: 12px; }
+            .time-unit { min-width: 75px; padding: 15px 10px; }
+            .mode-toggle {
+                bottom: 170px;
+                right: 10px;
+                padding: 10px 16px;
+                font-size: 1rem;
+            }
+            .container { padding: 10px; }
+            .destination-card,
+            .countdown-container,
+            .adventure-details,
+            .excitement-message {
+                margin: 15px 10px;
+                padding: 20px 15px;
+            }
+            .road { height: 120px; }
+            .road-line { width: 60px; height: 8px; }
+        }
+        
+        @media (max-width: 480px) {
+            .party-bus { font-size: 2.5rem; bottom: 130px; }
+            .mode-toggle {
+                bottom: 135px;
+                right: 5px;
+                padding: 8px 12px;
+                font-size: 0.9rem;
+                gap: 5px;
+            }
+            .countdown { gap: 8px; }
+            .time-unit { 
+                min-width: 65px; 
+                padding: 12px 8px; 
+            }
+            .number { font-size: 1.5rem; }
+            .label { font-size: 0.75rem; }
+            .destination-card,
+            .countdown-container,
+            .adventure-details,
+            .excitement-message {
+                margin: 10px 5px;
+                padding: 15px 10px;
+            }
+            .road { height: 100px; }
+            .road-line { width: 50px; height: 6px; }
+            .makeup-icon { font-size: 1.8rem; }
+        }
+        
+        @media (min-width: 1200px) {
+            .container { max-width: 1400px; margin: 0 auto; }
+        }
+    </style>
+</head>
+<body>
+    <div class="mode-toggle" onclick="toggleMode()">
+        <span id="modeIcon">✨</span>
+        <span id="modeText">Glam Mode</span>
+    </div>
+    
+    <div class="sparkles" id="sparkles"></div>
+    <div class="makeup-icons" id="makeupIcons"></div>
+    
+    <div class="road">
+        <div class="road-lines">
+            <div class="road-line"></div>
+            <div class="road-line"></div>
+            <div class="road-line"></div>
+            <div class="road-line"></div>
+            <div class="road-line"></div>
+        </div>
+    </div>
+    
+    <div class="party-bus">🚌</div>
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="title">🚌 Eilidh & Grace's BIG Adventure! 💄</h1>
+            <p class="subtitle">Road Trip to Manchester!</p>
+        </div>
+        
+        <div class="destination-card">
+            <div class="destination-title">🎯 Destination</div>
+            <div class="plouise-logo">✨ PLouise Store ✨</div>
+            <div class="destination-info">📍 Manchester City Centre</div>
+            <div class="destination-info">💖 The ULTIMATE Make-Up Paradise! 💖</div>
+        </div>
+        
+        <div class="countdown-container">
+            <div class="countdown-text">⏰ Countdown to the Adventure! ⏰</div>
+            <div class="countdown" id="countdown">
+                <div class="time-unit">
+                    <span class="number" id="days">00</span>
+                    <span class="label">Days</span>
+                </div>
+                <div class="time-unit">
+                    <span class="number" id="hours">00</span>
+                    <span class="label">Hours</span>
+                </div>
+                <div class="time-unit">
+                    <span class="number" id="minutes">00</span>
+                    <span class="label">Minutes</span>
+                </div>
+                <div class="time-unit">
+                    <span class="number" id="seconds">00</span>
+                    <span class="label">Seconds</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="adventure-details">
+            <div class="detail-item">
+                <span class="emoji">🌙</span>
+                <span>Only <strong id="sleepsCount">0</strong> sleeps to go!</span>
+            </div>
+            <div class="detail-item">
+                <span class="emoji">💄</span>
+                <span>Best friends on the best adventure!</span>
+            </div>
+            <div class="detail-item">
+                <span class="emoji">✨</span>
+                <span>Make-up magic awaits!</span>
+            </div>
+        </div>
+        
+        <div class="excitement-message">
+            🎉 Get ready for the MOST AMAZING day! 🎉<br>
+            🚌 Party bus to Manchester! 💖<br>
+            💄 PLouise shopping spree! ✨<br>
+            👯‍♀️ Best friends forever! 🌟
+        </div>
+    </div>
+
+    <script>
+        // Adventure date: February 7th, 2026 at 9:00 AM
+        const adventureDate = new Date(2026, 1, 7, 9, 0, 0); // Month is 0-indexed (1 = February)
+        
+        // Mode toggle function
+        function toggleMode() {
+            document.body.classList.toggle('glam-mode');
+            const isGlamMode = document.body.classList.contains('glam-mode');
+            document.getElementById('modeIcon').textContent = isGlamMode ? '💋' : '✨';
+            document.getElementById('modeText').textContent = isGlamMode ? 'Cute Mode' : 'Glam Mode';
+            
+            // Save preference
+            localStorage.setItem('glamMode', isGlamMode);
+        }
+        
+        // Load saved preference
+        if (localStorage.getItem('glamMode') === 'true') {
+            document.body.classList.add('glam-mode');
+            document.getElementById('modeIcon').textContent = '💋';
+            document.getElementById('modeText').textContent = 'Cute Mode';
+        }
+        
+        function updateCountdown() {
+            const now = new Date();
+            const difference = adventureDate - now;
+            
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+                
+                document.getElementById('days').textContent = String(days).padStart(2, '0');
+                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+                
+                document.getElementById('sleepsCount').textContent = days + (hours >= 12 ? 1 : 0);
+            } else {
+                document.querySelector('.countdown').innerHTML = 
+                    '<div style="font-size: 2.5rem; color: #ff1493; font-family: \'Fredoka One\', cursive;">🎉 THE ADVENTURE IS HERE! 🎉</div>';
+            }
+        }
+        
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.innerHTML = ['✨', '⭐', '🌟', '💫', '💖'][Math.floor(Math.random() * 5)];
+            sparkle.style.left = Math.random() * 100 + '%';
+            sparkle.style.top = Math.random() * 80 + '%';
+            sparkle.style.animationDelay = Math.random() * 4 + 's';
+            document.getElementById('sparkles').appendChild(sparkle);
+            
+            setTimeout(() => sparkle.remove(), 4000);
+        }
+        
+        function createMakeupIcon() {
+            const icons = ['💄', '💅', '✨', '👄', '💖', '🎀', '👑'];
+            const icon = document.createElement('div');
+            icon.className = 'makeup-icon';
+            icon.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+            icon.style.left = Math.random() * 90 + '%';
+            icon.style.top = Math.random() * 60 + '%';
+            icon.style.animationDelay = Math.random() * 8 + 's';
+            document.getElementById('makeupIcons').appendChild(icon);
+            
+            setTimeout(() => icon.remove(), 8000);
+        }
+        
+        // Initialize countdown
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+        
+        // Create effects
+        setInterval(createSparkle, 1500);
+        setInterval(createMakeupIcon, 3000);
+        
+        // Initial effects
+        for (let i = 0; i < 12; i++) {
+            setTimeout(createSparkle, i * 150);
+        }
+        for (let i = 0; i < 8; i++) {
+            setTimeout(createMakeupIcon, i * 400);
+        }
+    </script>
+</body>
+</html>
