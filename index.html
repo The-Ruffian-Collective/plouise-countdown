@@ -152,37 +152,56 @@
             text-align: center;
             padding: 8px;
             height: calc(100vh - 100px);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            align-items: center;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4px;
+            grid-auto-rows: auto;
+            justify-items: center;
+            align-content: space-around;
             overflow: hidden;
         }
-        
+
+        @media (min-width: 900px) {
+            .container {
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto auto auto;
+            }
+        }
+
         .header {
-            margin-bottom: 5px;
+            grid-column: 1 / -1;
+            margin-bottom: 2px;
         }
 
         .title {
             font-family: 'Fredoka One', cursive;
-            font-size: clamp(1.4rem, 5vw, 2.4rem);
+            font-size: clamp(1.5rem, 6vw, 3rem);
             background: linear-gradient(45deg, #ff6b9d, #ffd700, #ff8c94);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
             margin-bottom: 2px;
             animation: titleBounce 2s ease-in-out infinite;
             transition: all 0.5s ease;
             line-height: 1.1;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
         }
-        
+
+        @media (max-width: 600px) {
+            .title {
+                text-shadow: none;
+            }
+        }
+
         body.glam-mode .title {
             background: linear-gradient(45deg, #ffd700, #fff, #ffd700);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+            text-rendering: optimizeLegibility;
         }
         
         @keyframes titleBounce {
@@ -216,6 +235,13 @@
             position: relative;
             overflow: hidden;
             transition: all 0.5s ease;
+            width: 100%;
+        }
+
+        @media (min-width: 900px) {
+            .destination-card {
+                order: 3;
+            }
         }
         
         body.glam-mode .destination-card {
@@ -242,7 +268,7 @@
         
         .destination-title {
             font-family: 'Fredoka One', cursive;
-            font-size: clamp(1rem, 4vw, 1.5rem);
+            font-size: clamp(1.2rem, 5vw, 1.8rem);
             color: #ff1493;
             margin-bottom: 4px;
             transition: all 0.5s ease;
@@ -254,7 +280,7 @@
         }
         
         .destination-info {
-            font-size: clamp(0.8rem, 2.5vw, 1rem);
+            font-size: clamp(0.9rem, 3vw, 1.2rem);
             color: #ff69b4;
             font-weight: 600;
             margin: 2px 0;
@@ -293,6 +319,14 @@
             box-shadow: 0 15px 45px rgba(255,20,147,0.25);
             border: 3px solid #ffd700;
             transition: all 0.5s ease;
+            width: 100%;
+        }
+
+        @media (min-width: 900px) {
+            .countdown-container {
+                grid-column: 1 / -1;
+                order: 2;
+            }
         }
         
         body.glam-mode .countdown-container {
@@ -302,7 +336,7 @@
         
         .countdown-text {
             font-family: 'Chewy', cursive;
-            font-size: clamp(0.9rem, 3vw, 1.2rem);
+            font-size: clamp(1rem, 4vw, 1.5rem);
             color: #ff1493;
             margin-bottom: 5px;
             transition: all 0.5s ease;
@@ -343,7 +377,7 @@
         
         .number {
             font-family: 'Fredoka One', cursive;
-            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
             display: block;
             line-height: 1;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
@@ -365,6 +399,13 @@
             border: 3px solid #ff69b4;
             box-shadow: 0 10px 30px rgba(255,105,180,0.3);
             transition: all 0.5s ease;
+            width: 100%;
+        }
+
+        @media (min-width: 900px) {
+            .adventure-details {
+                order: 3;
+            }
         }
         
         body.glam-mode .adventure-details {
@@ -374,7 +415,7 @@
         }
         
         .detail-item {
-            font-size: clamp(0.75rem, 2.5vw, 0.95rem);
+            font-size: clamp(0.85rem, 3vw, 1.1rem);
             color: #c71585;
             font-weight: 600;
             margin: 3px 0;
@@ -400,13 +441,21 @@
             border-radius: 15px;
             margin: 4px auto;
             max-width: 700px;
-            font-size: clamp(0.7rem, 2.5vw, 0.95rem);
+            font-size: clamp(0.8rem, 3vw, 1.1rem);
             font-weight: 700;
             box-shadow: 0 10px 35px rgba(255,215,0,0.5);
             border: 3px solid #ff1493;
             animation: glow 2s ease-in-out infinite;
             transition: all 0.5s ease;
             line-height: 1.2;
+            width: 100%;
+        }
+
+        @media (min-width: 900px) {
+            .excitement-message {
+                grid-column: 1 / -1;
+                order: 4;
+            }
         }
         
         body.glam-mode .excitement-message {
